@@ -1,14 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-
-// const getFilePath = async () => {
-//   return new Promise((resolve) => {
-//     const readlineSync = require('readline-sync');
-//     const fileSrc = readlineSync.question('input your path:\n')   
-//     resolve(fileSrc)
-//   })
-// }
-
+// 排除不想要遍历子级的节点
 const validPath = (curFile, keyArr = []) => {
   let flag = true
   keyArr.forEach(item => {
@@ -20,8 +12,10 @@ const validPath = (curFile, keyArr = []) => {
   return flag
 }
 
-const getFileTree = async () => {
-  const rootPath = 'D:/XAEP-WEB'
+// 获取树结构(深度遍历)
+const getFileTree = () => {
+  // const rootPath = 'D:/XAEP-WEB'
+  const rootPath = 'D:/node-tools/for-test'
   // 递归所有文件，并导出树结构
   const _fileRead = (targetPath, obj = { name: 'root', wholeName: 'root', children: null}) => {
     // 判断是文件还是目录
@@ -36,7 +30,7 @@ const getFileTree = async () => {
         obj.children.push({
           name: item,
           wholeName: newPath,
-          children: _fileRead(newPath, { name: item, wholeName: newPath, children: null })
+          children: _fileRead(newPath, { name: item, wholeName: newPath, children: null})
         })
       })
       if (obj.name === 'root') {
@@ -53,12 +47,13 @@ const getFileTree = async () => {
   }
   
   try {
-    const resJson = _fileRead(rootPath)
-    fs.writeFileSync('./project-file-structure.txt', JSON.stringify(resJson), 'utf-8', err => {
+    const resObj = _fileRead(rootPath)
+    const resJson = JSON.stringify(resObj)
+    fs.writeFileSync('./project-file-structure.json', resJson, 'utf-8', err => {
       console.log('写入文件错误：', err)
     })
 
-    return resJson
+    return resObj
   } catch (error) {
     console.log('函数运行错误：', error)
   }
@@ -67,22 +62,50 @@ const getFileTree = async () => {
 // 生成形如下方的结构：
 // ————————————————————————————————————————————————————
 // ├── dist                       // 构建打包生成部署文件
-// │   ├── 1905301430                 // 静态资源（19年05月30日14时30分）
+// │---├── 1905301430                 // 静态资源（19年05月30日14时30分）
 // │   ├── config                     // 配置
 // │   ├── index.html                 // index.html入口
 // ├── build                      // 构建相关  
 // ├── config                     // 构建配置相关
-const treeToStr = (jsonObj) => {
-  console.log(jsonObj)
-}
+const writeTree = (rootObj, needRoot = false) => {
+  let res = ''
+  let stack = [rootObj]
+  let count = 0
 
-// 
-const writeTree = () => {
+  // 广度遍历能够标记每一个子节点的层级（好处）
+  const bfs = () => {
+    let node = stack[count]
+    if (node) {
+      // 如果需要根节点，则从 1 开始；如果不需要根节点，则刚开始不需要
+      node.level = node.level || (needRoot ? 1 : 0)
+      let str = Array.from(new Array(node.level), () => '|---').join('')
+      if (node.name !== 'root' || needRoot) {
+        res +=  `${str}${node.name}\n`
+      }
+      count++
+
+      if (node.children) {
+        stack.push(...node.children.map(item => {
+          item.level = node.level + 1
+          return item
+        }))
+      }
+
+      bfs()
+    }
+  }
+
   
+  bfs()
+  fs.writeFileSync('./project-file-structure.txt', res, 'utf-8', err => {
+    console.log('写入txt文件失败：', err)
+  })
+  return res
 }
 
-(() => {
+(async () => {
   const treeJson = getFileTree()
-  console.log('test', treeJson)
+  const treeStr = writeTree(treeJson, true)
+  console.log('hh', treeStr)
 })()
 
