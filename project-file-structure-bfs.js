@@ -1,3 +1,6 @@
+/**
+ * title: 用于生成项目文件目录
+ */
 const fs = require('fs')
 const path = require('path')
 // 排除不想要遍历子级的节点
@@ -14,8 +17,8 @@ const validPath = (curFile, keyArr = []) => {
 
 // 获取树结构(深度遍历)
 const getFileTree = () => {
-  // const rootPath = 'D:/XAEP-WEB'
-  const rootPath = 'D:/node-tools/for-test'
+  const rootPath = 'D:/XAEP-WEB'
+  // const rootPath = 'D:/node-tools/for-test'
   // 递归所有文件，并导出树结构
   const _fileRead = (targetPath, obj = { name: 'root', wholeName: 'root', children: null}) => {
     // 判断是文件还是目录
@@ -67,7 +70,7 @@ const getFileTree = () => {
 // │   ├── index.html                 // index.html入口
 // ├── build                      // 构建相关  
 // ├── config                     // 构建配置相关
-const writeTree = (rootObj, needRoot = false) => {
+const writeTree = (rootObj, needRoot = false, levelLimit = false) => {
   let res = ''
   let stack = [rootObj]
   let count = 0
@@ -78,6 +81,10 @@ const writeTree = (rootObj, needRoot = false) => {
     if (node) {
       // 如果需要根节点，则从 1 开始；如果不需要根节点，则刚开始不需要
       node.level = node.level || (needRoot ? 1 : 0)
+      // 如果限定了最大层级，则更深的层级不用往下遍历了
+      if (levelLimit && node.level > levelLimit) {
+        return
+      }
       let str = Array.from(new Array(node.level), () => '|---').join('')
       if (node.name !== 'root' || needRoot) {
         res +=  `${str}${node.name}\n`
@@ -105,7 +112,7 @@ const writeTree = (rootObj, needRoot = false) => {
 
 (async () => {
   const treeJson = getFileTree()
-  const treeStr = writeTree(treeJson, true)
+  const treeStr = writeTree(treeJson, false, 4)
   console.log('hh', treeStr)
 })()
 
