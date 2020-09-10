@@ -81,10 +81,14 @@ const writeTree = (rootObj, levelLimit = 999, needRoot = false) => {
         str += ' '
       }
       if (obj.name !== 'root' || needRoot) {
-        res += `${str}${obj.name}\n`
+        if (obj.children) {
+          res += `${str}${obj.name}/\n`
+        } else {
+          res += `${str}${obj.name}\n`
+        }
       }
 
-      if (obj.children && (obj.level <= levelLimit)) {
+      if (obj.children && (obj.level < levelLimit)) {
         obj.children.forEach(item => {
           item.level = obj.level + 1
           dfs(item)

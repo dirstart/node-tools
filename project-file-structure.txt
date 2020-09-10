@@ -6,7 +6,7 @@
 |---.gitignore
 |---.gitkeep
 |---.postcssrc.js
-|--- build
+|--- build/
 |---|---build.js
 |---|---check-versions.js
 |---|---utils.js
@@ -16,7 +16,7 @@
 |---|---webpack.prod.conf.js
 |---|---webpack.test.conf.js
 |---CHANGELOG.md
-|--- config
+|--- config/
 |---|---dev.env.js
 |---|---index.js
 |---|---prod.env.js
@@ -28,121 +28,29 @@
 |---package-lock.json
 |---package.json
 |---README.md
-|--- src
-|---|--- api
-|---|---|--- auth
-|---|---|--- comp
-|---|---|---constants.js
-|---|---|--- core
-|---|---|---errorCode.js
-|---|---|--- exam
-|---|---|---httpRequest.js
-|---|---|---index.js
-|---|---|--- log
-|---|---|--- manage
-|---|---|---paths.js
-|---|---|--- practice
+|--- src/
+|---|--- api/
 |---|---app.config.js
 |---|---App.vue
-|---|--- assets
-|---|---|--- img
-|---|---|--- scss
-|---|--- components
-|---|---|--- calculator
-|---|---|--- echarts
-|---|---|--- fixed-tools
-|---|---|--- icon-svg
-|---|---|---index.js
-|---|---|--- mf-au-record
-|---|---|--- mf-iframe
-|---|---|--- mf-select-option
-|---|---|--- mf-subject
-|---|---|--- mf-upload
-|---|---|--- organization
-|---|---|--- table-tree-column
-|---|--- constants
-|---|---|---index.js
-|---|--- element-ui
-|---|---|---index.js
-|---|--- element-ui-theme
-|---|---|--- element-#0BB2D4
-|---|---|--- element-#11C26D
-|---|---|--- element-#17B3A3
-|---|---|--- element-#3390FF
-|---|---|--- element-#3E8EF7
-|---|---|--- element-#667AFA
-|---|---|--- element-#757575
-|---|---|--- element-#9463F7
-|---|---|--- element-#997B71
-|---|---|--- element-#EB6709
-|---|---|--- element-#F74584
-|---|---|--- element-#FCB900
-|---|---|--- element-#FF4C52
-|---|---|---index.js
-|---|--- icons
-|---|---|---iconfont.js
-|---|---|---index.js
-|---|---|--- svg
+|---|--- assets/
+|---|--- components/
+|---|--- constants/
+|---|--- element-ui/
+|---|--- element-ui-theme/
+|---|--- icons/
 |---|---main.js
-|---|--- mixins
-|---|---|---bpm.js
-|---|---|---global.js
-|---|---|---index.js
-|---|---|---options.js
-|---|---|---quill-editor.js
-|---|---|---table-formatter.js
-|---|--- mock
-|---|---|---index.js
-|---|---|--- modules
-|---|--- router
-|---|---|---import-development.js
-|---|---|---import-production.js
-|---|---|---index.js
-|---|---|---main-routes-children.js
-|---|---|---routes.js
-|---|--- store
-|---|---|---index.js
-|---|---|--- modules
-|---|--- utils
-|---|---|---debounce.js
-|---|---|---documents.js
-|---|---|---formatHtml.js
-|---|---|---index.js
-|---|---|---preventCheat.js
-|---|---|---validate.js
-|---|--- views
-|---|---|--- common
-|---|---|--- demo
-|---|---|---main-content.vue
-|---|---|---main-navbar-update-lock-password.vue
-|---|---|---main-navbar-update-password.vue
-|---|---|---main-navbar.vue
-|---|---|---main-sidebar-sub-menu.vue
-|---|---|---main-sidebar.vue
-|---|---|---main.vue
-|---|---|--- modules
-|---|---|---下载.lnk
-|--- static
-|---|--- config
-|---|---|---index-prod.js
-|---|---|---index-qa.js
-|---|---|---index-uat.js
-|---|---|---index.js
-|---|---|---init.js
-|---|--- img
-|---|---|---favicon.ico
-|---|--- plugins
-|---|---|--- mock-1.0.0-beta3
+|---|--- mixins/
+|---|--- mock/
+|---|--- router/
+|---|--- store/
+|---|--- utils/
+|---|--- views/
+|--- static/
+|---|--- config/
+|---|--- img/
+|---|--- plugins/
 |---|---前端功能设计和使用demo.pdf
-|--- test
-|---|--- e2e
-|---|---|--- custom-assertions
-|---|---|---nightwatch.conf.js
-|---|---|---runner.js
-|---|---|--- specs
-|---|--- unit
-|---|---|---.eslintrc
-|---|---|---jest.conf.js
-|---|---|---setup.js
-|---|---|--- specs
+|--- test/
+|---|--- e2e/
+|---|--- unit/
 |---test.js
