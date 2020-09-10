@@ -22,12 +22,10 @@ const validPath = (curFile, keyArr = []) => {
 
 const main = async () => {
   const rootPath = 'E:/XAEP-WEB'
-  
+  // 递归所有文件，并导出树结构
   const _fileRead = (targetPath, obj = { name: 'root', wholeName: 'root', children: null}) => {
-
     // 判断是文件还是目录
     const stat = fs.statSync(targetPath)
-
     if (stat.isDirectory() && validPath(targetPath, ['node_modules', '.git'])) {
       const fileList = fs.readdirSync(targetPath)
       obj.children = []
@@ -40,17 +38,25 @@ const main = async () => {
           children: _fileRead(newPath, { name: item, wholeName: newPath, children: null })
         })
       })
-      return obj.children
+      if (obj.name === 'root') {
+        // 如果是第一级，返回整个对象
+        return obj
+      } else {
+        return obj.children
+      }
     } else {
       return obj
     }
   }
-
-  const god = _fileRead(rootPath)
-  console.log('god', god)
-  fs.writeFileSync('./test.txt', JSON.stringify(god), 'utf-8', err => {
-    console.log('err', err)
-  })
+  
+  try {
+    const resJson = _fileRead(rootPath)
+    fs.writeFileSync('./project-file-structure.txt', JSON.stringify(resJson), 'utf-8', err => {
+      console.log('写入文件错误：', err)
+    })
+  } catch (error) {
+    console.log('函数运行错误：', error)
+  }
 }
 
 main()
